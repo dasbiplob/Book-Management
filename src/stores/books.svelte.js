@@ -3,7 +3,6 @@ import * as bookApi from "../http-actions/books-api.js";
 let books = $state([]);
 
 const initBooks = async () => {
-  if (books.length > 0) return;
   books = await bookApi.getBooks();
 }
 
@@ -12,10 +11,13 @@ const useBookStore = () => {
     get books() {
       return books;
     },
+    deleteBookById: (id) => {
+      books = books.filter(book => book.id != id);
+    },
     addBook: (book) => {
       books = [...books, book]
     },
   };
 };
 
-export { initBooks, useBookStore };
+export { useBookStore, initBooks };
